@@ -43,6 +43,7 @@ export async function loadState(): Promise<State> {
 
 export async function saveState(s: State) {
   if (redis) return void (await redis.set(KEY, s));
+  if (process.env.VERCEL) throw new Error("Redis 저장소가 연결되지 않았어요 (Vercel > Storage > Upstash Redis를 이 프로젝트에 Connect 후 Redeploy)");
   await fs.mkdir(path.dirname(FILE), { recursive: true });
   await fs.writeFile(FILE, JSON.stringify(s, null, 2));
 }
