@@ -15,7 +15,7 @@ export default function Home() {
   const [busy, setBusy] = useState("");
 
   const api = useCallback(async (path: string, init?: RequestInit) => {
-    const r = await fetch(path, { ...init, headers: { "x-app-key": key, "content-type": "application/json" } });
+    const r = await fetch(path, { ...init, headers: { "x-app-key": key.trim(), "content-type": "application/json" } });
     const j = await r.json(); if (!r.ok) throw new Error(j.error); return j;
   }, [key]);
 
@@ -65,7 +65,7 @@ export default function Home() {
           {busy === "scan" ? "검색 중…" : "이벤트 찾기"}
         </button>
         <button style={btn("#475569")} onClick={() => run("push", enablePush)}>🔔 알림</button>
-        <button style={btn("#475569")} onClick={() => (location.href = `/api/google/login?key=${encodeURIComponent(key)}`)}>Google 연결</button>
+        <button style={btn("#475569")} onClick={() => (location.href = `/api/google/login?key=${encodeURIComponent(key.trim())}`)}>Google 연결</button>
       </div>
 
       {sugs.length > 0 && <h2>🎓 추천 이벤트</h2>}
