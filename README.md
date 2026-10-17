@@ -1,36 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weekly Planner (personal MVP)
 
-## Getting Started
+Canvas + Google Calendar + Gmail → AI 주간 플랜 & 웨비나/info session 추천 알림. PWA라서 iPhone/Windows 모두 설치 가능.
 
-First, run the development server:
+## 셋업
+1. `cp .env.example .env.local` 후 값 채우기
+2. Canvas: Settings → New Access Token (안 되면 `CANVAS_ICS_URL`)
+3. Google Cloud Console: 프로젝트 생성 → Calendar API, Gmail API 활성화 → OAuth Client(Web, redirect `https://<배포주소>/api/google/callback`) → ID/Secret을 환경변수로. 앱에서 'Google 연결' 버튼으로 로그인
+4. `npx web-push generate-vapid-keys` → VAPID 키 입력
+5. `npm run dev` (로컬) 또는 Vercel 배포 (푸시는 HTTPS 필요)
+6. iPhone: Safari → 공유 → 홈 화면에 추가 → 앱에서 🔔 알림 켜기 (iOS 16.4+)
+7. 이벤트 자동 스캔: 외부 크론이 `GET /api/scan?key=APP_KEY`를 하루 몇 번 호출
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 알려진 한계 (MVP)
+- 단일 사용자. 상태는 Upstash Redis(배포) 또는 `.data/state.json`(로컬)에 저장 (`lib/store.ts`)
+- iOS는 알림 액션 버튼을 지원하지 않음 → 알림 탭 후 앱에서 갈래요/안 갈래요 선택

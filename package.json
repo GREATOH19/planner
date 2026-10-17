@@ -9,14 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
+    "@upstash/redis": "^1.39.0",
+    "googleapis": "^186.0.0",
+    "next": "14.2.35",
+    "node-ical": "^0.27.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.35"
+    "web-push": "^3.6.7",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "@types/web-push": "^3.6.4",
+    "typescript": "^5"
   }
 }
